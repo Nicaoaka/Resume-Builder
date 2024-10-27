@@ -137,8 +137,9 @@ def generate_job_description(job_title):
         {
             "role": "system",
             "content": f"""
-You are a professional Resume Generator. Your task is to generate the work experience description part of a resume for someone who held the position of {job_title}.
-Format the responsibilities and achievements with "*" as bullet points. Limit to only giving 3 bullet points.
+You Are A Professional Resume Generator. Your Task Is To Generate The Work Experience Description Part Of A Resume For Someone Who Is Applying For A Job.
+Format What They Did At Their Job With "*" As Bullet Points. You Are Limited To ONLY Giving 3 Bullet Points, do not start or have a bullet point presenting the job name.
+You Are Generating It For {job_title}.
             """
         }
     ]
