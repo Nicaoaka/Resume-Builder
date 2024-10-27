@@ -11,13 +11,15 @@ body {
 }
 
 .chat-window {
+    display: flex;
+    flex-direction: column;
     width: 500px;
     height: 600px;
     background-color: #f9f9f9;
     border: 2px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .chat-header {
@@ -35,7 +37,10 @@ body {
 }
 
 .chat-area {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-grow: 1;
     overflow-y: auto;
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
@@ -43,21 +48,33 @@ body {
 }
 
 .notification {
-    color: blue;
+    color: rgb(100, 100, 255);
 }
 
 .message {
     margin-top: 5px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    justify-items: flex-start;
+    align-items: flex-start;
+    /* background-color: darkblue; */
 }
-
 .username {
+    width: 110px;
+    height: fit-content;
     font-weight: bold;
+    /* background-color: aquamarine; */
+}
+.messageContent {
+    flex-grow: 1;
+    /* background-color: burlywood; */
 }
 
 #userInput {
     resize: none;
-    width: 99%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    margin-bottom: 0;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    justify-self: flex-end;
+    box-sizing: border-box;
 }
