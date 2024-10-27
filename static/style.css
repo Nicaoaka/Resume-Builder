@@ -51,16 +51,19 @@ body {
 .message {
     margin-top: 5px;
     display: flex;
+    align-items: flex-start;
 }
 
 .username {
-    width: 100px;
+    min-width: 60px;
     font-weight: bold;
 }
 
 .messageContent {
     flex-grow: 1;
+    word-wrap: break-word;
 }
+
 
 #userInput {
     resize: none;
