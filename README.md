@@ -37,7 +37,7 @@ AI Resume Builder is a web application that guides users through creating a prof
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Nicaoaka/marinara.git
+   git clone https://github.com/Nicaoaka/Resume-Builder.git
    cd ai-resume-builder
    ```
 
