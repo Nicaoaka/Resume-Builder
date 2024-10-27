@@ -25,7 +25,10 @@ def capitalize_words(text, exceptions=None):
     if exceptions is None:
         exceptions = []
     words = text.split()
-    capitalized_words = [word.capitalize() if word.lower() not in exceptions else word.lower() for word in words]
+    capitalized_words = [
+        word.capitalize() if word.lower() not in exceptions else word.lower()
+        for word in words
+    ]
     return ' '.join(capitalized_words)
 
 def validate_email(email):
@@ -395,10 +398,26 @@ def chat():
         elif step == 5:
             # Receive high school graduation date
             if validate_date(user_message):
+                grad_date = parse_date(user_message)
                 user_info['high_school_grad_date'] = format_date(user_message)
-                user_info['high_school_grad_label'] = "Graduation Date" if parse_date(user_message) <= datetime.now() else "Expected Graduation Date"
-                response = "Please enter the name of your university (or type '0' to skip):"
-                session['step'] = 6
+                user_info['high_school_grad_label'] = (
+                    "Graduation Date" if grad_date <= datetime.now() else "Expected Graduation Date"
+                )
+
+                if grad_date > datetime.now():
+                    # Graduation date is in the future; user hasn't graduated yet
+                    # Skip university information and proceed to skills
+                    user_info['university'] = ""
+                    user_info['university_grad_date'] = ""
+                    user_info['university_grad_label'] = ""
+                    user_info['university_degree'] = ""
+                    user_info['university_gpa'] = ""
+                    response = "Please list one of your skills (type 'done' when finished):"
+                    session['step'] = 10  # Corrected step number for skills
+                else:
+                    # Graduation date is in the past; ask for university information
+                    response = "Please enter the name of your university (or type '0' to skip):"
+                    session['step'] = 6
             else:
                 response = "Invalid date format. Please enter the graduation date in MM/YYYY format."
         elif step == 6:
@@ -414,7 +433,7 @@ def chat():
                 user_info['university_degree'] = ""
                 user_info['university_gpa'] = ""
                 response = "Please list one of your skills (type 'done' when finished):"
-                session['step'] = 9
+                session['step'] = 10  # Corrected step number for skills
         elif step == 7:
             # Receive university graduation date
             if user_message.lower() == '0':
@@ -424,7 +443,9 @@ def chat():
                 session['step'] = 8
             elif validate_date(user_message):
                 user_info['university_grad_date'] = format_date(user_message)
-                user_info['university_grad_label'] = "Graduation Date" if parse_date(user_message) <= datetime.now() else "Expected Graduation Date"
+                user_info['university_grad_label'] = (
+                    "Graduation Date" if parse_date(user_message) <= datetime.now() else "Expected Graduation Date"
+                )
                 response = "Please enter your degree (e.g., Bachelor of Science in Computer Science):"
                 session['step'] = 8
             else:
@@ -432,7 +453,8 @@ def chat():
         elif step == 8:
             # Receive degree
             if user_message != "":
-                user_info['university_degree'] = user_message
+                # Apply auto-capitalization to the degree input
+                user_info['university_degree'] = capitalize_words(user_message, exceptions=["of", "in", "and", "for"])
                 response = "What's your GPA? (Type '0' to skip)"
                 session['step'] = 9
             else:
@@ -490,7 +512,7 @@ def chat():
                 # Generate PDF
                 generate_pdf(user_info)
                 
-                response = "Your resume has been generated successfully! You can download it <a href='/download_resume' target='_blank'> download it here</a>."
+                response = "Your resume has been generated successfully! You can download it <a href='/download_resume' target='_blank'>here</a>."
                 session.clear()
             else:
                 job = {'title': user_message}
