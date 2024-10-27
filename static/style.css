@@ -51,17 +51,21 @@ body {
 .message {
     margin-top: 5px;
     display: flex;
+    flex-direction: row;
     align-items: flex-start;
 }
 
 .username {
-    min-width: 60px;
+    min-width: 100px;
     font-weight: bold;
+    background-color: aquamarine;
 }
 
 .messageContent {
-    flex-grow: 1;
+    max-width: fit-content;
     word-wrap: break-word;
+    word-break: break-all;
+    background-color: darkgreen;
 }
 
 

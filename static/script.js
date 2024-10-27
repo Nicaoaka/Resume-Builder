@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const userInput = document.querySelector("#userInput");
     const chatArea = document.querySelector("#chatArea");
+    const botUser = "Resume Bot"
+    const username = "You"
 
     userInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -9,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (messageContent.length === 0) return;
 
             // Display user message
-            addMessageToChat("You", messageContent);
+            addMessageToChat(username, messageContent);
 
             // Send data to backend
             fetch('/chat', {
@@ -19,11 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(data => {
-                addMessageToChat("Bot", data.message);
+                addMessageToChat(botUser, data.message);
             })
             .catch(error => {
                 console.error('Error:', error);
-                addMessageToChat("Bot", "Sorry, something went wrong. Please try again.");
+                addMessageToChat(botUser, "Sorry, something went wrong. Please try again.");
             });
 
             e.target.value = "";
