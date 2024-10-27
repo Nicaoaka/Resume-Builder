@@ -19,7 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(data => {
-                addMessageToChat("Bot", data.message);
+                // Display bot typing indicator
+                addTypingIndicator();
+
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    typeText("Bot", data.message);
+                }, 500); // Adjust the delay as needed
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -36,5 +42,49 @@ document.addEventListener("DOMContentLoaded", () => {
         messageElement.innerHTML = `<div class="username">${username}: </div><div class="messageContent">${message}</div>`;
         chatArea.appendChild(messageElement);
         chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+        const typingElement = document.createElement("div");
+        typingElement.classList.add("message");
+        typingElement.id = "typingIndicator";
+        typingElement.innerHTML = `<div class="username">Bot: </div><div class="messageContent"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+        chatArea.appendChild(typingElement);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingElement = document.getElementById("typingIndicator");
+        if (typingElement) {
+            typingElement.remove();
+        }
+    }
+
+    function typeText(username, text) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        const usernameDiv = document.createElement("div");
+        usernameDiv.classList.add("username");
+        usernameDiv.textContent = `${username}: `;
+        const messageContentDiv = document.createElement("div");
+        messageContentDiv.classList.add("messageContent");
+        messageElement.appendChild(usernameDiv);
+        messageElement.appendChild(messageContentDiv);
+        chatArea.appendChild(messageElement);
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        let index = 0;
+        const speed = 30;
+
+        function type() {
+            if (index < text.length) {
+                messageContentDiv.innerHTML += text.charAt(index);
+                index++;
+                chatArea.scrollTop = chatArea.scrollHeight;
+                setTimeout(type, speed);
+            }
+        }
+
+        type();
     }
 });
