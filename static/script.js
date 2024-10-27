@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(data => {
-                addMessageToChat("Resume Bot", data.message);
+                addMessageToChat("Bot", data.message);
             })
             .catch(error => {
                 console.error('Error:', error);
-                addMessageToChat("Resume Bot", "Sorry, something went wrong. Please try again.");
+                addMessageToChat("Bot", "Sorry, something went wrong. Please try again.");
             });
 
             e.target.value = "";
