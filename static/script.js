@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const userInput = document.querySelector("#userInput");
     const chatArea = document.querySelector("#chatArea");
-    const botUser = "Resume Bot"
-    const username = "You"
+    const username = "You";
 
     userInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -26,12 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 setTimeout(() => {
                     removeTypingIndicator();
-                    typeText("Bot", data.message);
+                    
+                    // Check if the message contains HTML tags
+                    if (containsHTML(data.message)) {
+                        addMessageToChat("Bot", data.message);
+                    } else {
+                        // Use typing effect for plain text
+                        typeText("Bot", data.message);
+                    }
                 }, 500); // Adjust the delay as needed
             })
             .catch(error => {
                 console.error('Error:', error);
-                addMessageToChat(botUser, "Sorry, something went wrong. Please try again.");
+                addMessageToChat("Bot", "Sorry, something went wrong. Please try again.");
             });
 
             e.target.value = "";
@@ -80,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function type() {
             if (index < text.length) {
+                // Append one character at a time
                 messageContentDiv.innerHTML += text.charAt(index);
                 index++;
                 chatArea.scrollTop = chatArea.scrollHeight;
@@ -88,5 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         type();
+    }
+
+    /**
+     * Utility function to check if a string contains HTML tags.
+     * @param {string} str - The string to check.
+     * @returns {boolean} - True if HTML tags are present, else false.
+     */
+    function containsHTML(str) {
+        const pattern = /<\/?[a-z][\s\S]*>/i;
+        return pattern.test(str);
     }
 });

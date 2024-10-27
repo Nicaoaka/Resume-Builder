@@ -490,7 +490,7 @@ def chat():
                 # Generate PDF
                 generate_pdf(user_info)
                 
-                response = "Your resume has been generated successfully! You can download it <a href='/download_resume' target='_blank'>here</a>."
+                response = "Your resume has been generated successfully! You can download it <a href='/download_resume' target='_blank'> download it here</a>."
                 session.clear()
             else:
                 job = {'title': user_message}
