@@ -1,6 +1,6 @@
 # 📝 AI Resume Builder
 
-AI Resume Builder is a web application that guides users through creating a professional resume using a chatbot interface. The application collects user input, generates a resume, and exports it as a PDF file. The backend is powered by Flask, while the frontend uses HTML, CSS, and JavaScript for a seamless user experience.
+AI Resume Builder is a web application that guides users through creating a professional resume using a chatbot interface. The application collects user input, generates a resume, and exports it as a PDF file. Flask powers the backend, while the frontend uses HTML, CSS, and JavaScript for a seamless user experience.
 
 ## ✨ Features
 
@@ -49,7 +49,7 @@ AI Resume Builder is a web application that guides users through creating a prof
 3. **Set up API Key**:
    - Get an API key from the required inference service.
    - Add it to your environment variables:
-The API key is provided by HuggingFace. Make a HuggingFace Accunt and generate a token for full use.
+HuggingFace provides the API key. Make a HuggingFace Account and generate a token for full use.
      ```bash
      export HF_API_KEY="your_api_key_here"
      ```
@@ -89,7 +89,7 @@ The API key is provided by HuggingFace. Make a HuggingFace Accunt and generate a
 
 ## 🤝 Contributing
 
-Feel free to fork this project and submit pull requests. Contributions are welcome!
+Feel free to fork this project and submit pull requests. Contributions are welcome! The project is submitted as is for a hackathon.
 
 ## 📜 License
 
