@@ -16,7 +16,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # Initialize Inference Client
-API_KEY = os.getenv("HF_API_KEY", "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")
+API_KEY = os.getenv("HF_API_KEY", "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") # THIS KEY IS KILLED AFTER THE HACKATHON PLEASE GENERATE YOUR OWN!
 client = InferenceClient(api_key=API_KEY)
 
 # Helper Functions
