@@ -49,10 +49,10 @@ def format_phone(phone):
     
 def collect_user_info():
     user_info = {}
-    
+
     # Asking for name
     user_info['full_name'] = input("What is your full name?\n>> ").strip()
-    
+
     # Asking for email
     while True:
         email = input("What is your email address? Type 0 if you want to void this question and part on your resume\n>> ").strip()
@@ -61,7 +61,7 @@ def collect_user_info():
             break
         else:
             print("Invalid email address. Please try again.")
-            
+
     # Asking for phone number
     while True:
         phone = input("What is your phone number? Type 0 if you want to void this question and part on your resume\n>> ").strip()
@@ -70,7 +70,7 @@ def collect_user_info():
             break
         else:
             print("Invalid phone number. Please try again.")
-            
+
     # Asking for Education Background
     education_choices = {
         "1": "High School",
@@ -83,21 +83,31 @@ def collect_user_info():
             user_info['education'] = education_choices[edu_choice]
             break
         else:
-            print("Invalid choice. Please seleccet 1 or 2.")
-            
+            print("Invalid choice. Please select 1 or 2.")
+
     # Asking for Skills
     print("List your skills. Type '0' when finished")
+    skills = []
+    while True:
+        skill = input(">> ").strip()
+        if skill == "0":
+            break
+        skills.append(skill)
+    user_info['skills'] = skills
+
+    # Asking for Achievements
+    print("List your achievements. Type '0' when finished")
     achievements = []
     while True:
-        acheivement = input(">> ").strip()
-        if acheivement == "0":
+        achievement = input(">> ").strip()
+        if achievement == "0":
             break
-        achievements.append(acheivement)
-        if len(achievements) >= 5: # limit to prevent too many skills
-            print("Achieve limit reached. We will move onto the next.")
+        achievements.append(achievement)
+        if len(achievements) >= 5:  # limit to prevent too many achievements
+            print("Achievement limit reached. We will move onto the next.")
             break
     user_info['achievements'] = achievements
-    
+
     # Asking for Work Experience
     user_info['work_experience'] = []
     print("Enter your past job experiences. Type '0' when finished:")
@@ -106,16 +116,16 @@ def collect_user_info():
         if job_title == "0":
             break
         job = {'title': job_title}
-        
+
         job['location'] = input("Where was this job located?\n>> ").strip()
         job['start_date'] = input("What was your start date? (MM/YYYY).\n>> ").strip()
         job['end_date'] = input("What was your end date? (MM/YYYY). Type 'Present' if you are still working there.\n>> ").strip()
-        
+
         description = generate_job_description(job_title)
         job['description'] = description
-        
+
         user_info['work_experience'].append(job)
-        
+
     return user_info
 
 def generate_job_description(job_title):
@@ -151,12 +161,12 @@ def generate_pdf(user_info):
     y_position = height - 50
     
     # Full Name
-    c.setFont("Helvectica-Bold", 20)
+    c.setFont("Helvetica-Bold", 20)
     c.drawString(50, y_position, user_info['full_name'])
     y_position -= 30
     
     # Contact Information
-    c.setFont("Helvectica", 12)
+    c.setFont("Helvetica", 12)
     contact_info = ""
     if user_info['email']:
         contact_info += f"Email: {user_info['email']}"
@@ -165,19 +175,19 @@ def generate_pdf(user_info):
     c.drawString(50, y_position, contact_info)
     
     # Education
-    c.setFont("Helvectica-Bold", 14)
+    c.setFont("Helvetica-Bold", 14)
     c.drawString(50, y_position, "Education")
     y_position -= 20
-    c.setFont("Helvectica", 12)
+    c.setFont("Helvetica", 12)
     c.drawString(60, y_position, user_info['education'])
     y_position -= 30
     
     # Work Experience
     if user_info['work_experience']:
-        c.setFont("Helvectica-Bold", 14)
+        c.setFont("Helvetica-Bold", 14)
         c.drawString(50, y_position, "Work Experience")
         y_position -= 20
-        c.setFont("Helvectica", 12)
+        c.setFont("Helvetica", 12)
         for job in user_info ['work_experience']:
             c.drawString(60, y_position, f"**{job['title']}**")
             y_position -= 15
@@ -190,20 +200,20 @@ def generate_pdf(user_info):
             
     # Skills
     if user_info['skills']:
-        c.setFont("Helvectica", 14)
+        c.setFont("Helvetica", 14)
         c.drawString(50, y_position, "Skills")
         y_position -= 20
-        c.setFont("Helvectica", 12)
+        c.setFont("Helvetica", 12)
         skills_text = ', '.join(user_info['skills'])
         c.drawString(60, y_position, skills_text)
         y_position -= 30
         
     # Achievements
     if user_info['achievements']:
-        c.setFont("Helvectica", 14)
+        c.setFont("Helvetica", 14)
         c.drawString(50, y_position, "Achievements")
         y_position -= 20
-        c.setFont("Helvectica", 12)
+        c.setFont("Helvetica", 12)
         for achievement in user_info['achievements']:
             c.drawString(60, y_position, f"- {achievement}")
             y_position -= 15
